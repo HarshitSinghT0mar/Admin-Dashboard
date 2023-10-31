@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AppContext from "./contexts/AppContext";
 
 
@@ -6,14 +6,28 @@ const Users = ({ userData, setUserData }) => {
   const {selected, setSelected} = useContext(AppContext)
 
   const selectCheckbox = (e) => {
-    const { value, checked } = e.target;
-    const selectedId = Number(value);
+    const { value: selectedId, checked } = e.target;
+    
+  
     if (checked) {
-      return setSelected((prev) => {
+     setSelected((prev) => {
         return [...prev, selectedId];
       });
+    }else {
+    const filteredIds=  selected.filter((id)=>selectedId!==id);
+    setSelected(filteredIds)
     }
+  
   };
+
+
+  const deleteUser=(id)=>{
+    const filteredUsers=userData.filter((user)=>{
+      return user.id!==id;
+    });
+    setUserData(filteredUsers);
+
+  }
   return (
     <>
       {userData.map((user) => {
@@ -34,7 +48,7 @@ const Users = ({ userData, setUserData }) => {
             <td>
               <div className="action-buttons">
                 <button className="btn edit-btn">Edit</button>
-                <button className="btn delete-btn">Delete</button>
+                <button className="btn delete-btn" onClick={(e)=>deleteUser(id)}>Delete</button>
               </div>
             </td>
           </tr>
