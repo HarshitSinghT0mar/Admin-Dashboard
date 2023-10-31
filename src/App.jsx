@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import React from "react";
+import "./App.css";
+import Users from "./components/Users";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [userData, setUserData] = useState([]);
+  
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+  const fetchData = async () => {
+    const apiUrl ="https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
+
+    try {
+      const res = await fetch(apiUrl);
+      const data = await res.json();
+      
+      data.length > 0 ? setUserData(data) : null;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+    useEffect(()=>{
+        fetchData();
+      
+    },[])
+
+    return (
+      <div className="app">
+      <div className="search-bar">
+      <input type="search" placeholder="search" />
+      <button className="search-btn btn">Search</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <table>
+          <thead>
+            <tr>
+          
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <Users userData={userData} setUserData={setUserData} />
+          </tbody>
+        </table>
+   <button>Delete Selected</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    );
+
 }
 
-export default App
+export default App;
