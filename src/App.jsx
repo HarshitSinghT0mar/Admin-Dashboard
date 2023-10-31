@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import "./App.css";
 import Users from "./components/Users";
+import Search from "./components/Search";
 
 function App() {
   const [userData, setUserData] = useState([]);
@@ -27,14 +28,10 @@ function App() {
 
     return (
       <div className="app">
-      <div className="search-bar">
-      <input type="search" placeholder="search" />
-      <button className="search-btn btn">Search</button>
-      </div>
+      <Search userData={userData} setUserData={setUserData} />
         <table>
           <thead>
             <tr>
-          
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
@@ -46,7 +43,7 @@ function App() {
             <Users userData={userData} setUserData={setUserData} />
           </tbody>
         </table>
-   <button>Delete Selected</button>
+         <button>Delete Selected</button>
       </div>
     );
 
