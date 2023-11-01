@@ -112,8 +112,11 @@ transition: all 0.5s ease;
 
   }
 
-
- 
+.bottom-container{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
 
 
 

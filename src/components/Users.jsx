@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import AppContext from "./contexts/AppContext";
 
 
-const Users = ({ userData, setUserData }) => {
-  const {selected, setSelected} = useContext(AppContext)
+const Users = () => {
+  const {selected, setSelected,userData, setUserData,query } = useContext(AppContext)
 
   const selectCheckbox = (e) => {
     const { value: selectedId, checked } = e.target;
@@ -28,9 +28,15 @@ const Users = ({ userData, setUserData }) => {
     setUserData(filteredUsers);
 
   }
+
+  const filteredUsersBySearch=userData?.filter((user)=>{
+  
+    return user.name.toLowerCase().startsWith(query.toLowerCase())
+  })
   return (
     <>
-      {userData.map((user) => {
+      {filteredUsersBySearch.map((user) => {
+       
         const { id, name, email, role } = user;
         return (
           <tr key={id}>
