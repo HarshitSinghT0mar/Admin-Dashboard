@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import React from "react";
 import "./App.css";
-import Users from "./components/Users";
+import UsersTable from "./components/UsersTable";
 import Search from "./components/Search";
 import AppContext from "./components/contexts/AppContext";
 
@@ -40,20 +40,9 @@ function App() {
   return (
     <div className="app">
       <Search />
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
 
-        <tbody>
-          <Users />
-        </tbody>
-      </table>
+     <UsersTable />
+     
       <div className="bottom-container">
         <button className="btn delete-btn" onClick={deleteSelectedUsers}>
           Delete Selected
