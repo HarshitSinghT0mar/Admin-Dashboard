@@ -10,6 +10,13 @@
 
 html{
   font-size: 62.5%;
+  height: 100%;
+}
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
 }
 
 .app{
@@ -20,6 +27,7 @@ html{
   overflow: hidden;
 padding: 4rem;
   height: 100%;
+  position: relative;
 }
 .search-bar{
   width: 100%;
@@ -44,6 +52,11 @@ padding: 4rem;
   transform: none !important;
    background-color: rgb(78, 162, 78);
 }
+
+.user-table{
+  min-height: 80vh;
+
+}
 table {
   margin: 5rem auto;
   border-radius: 2rem;
@@ -52,6 +65,7 @@ table {
   box-shadow: 0 0 0 1px black;
   overflow: hidden;
   max-width: 80rem;
+
 }
  td{
   font-size: 1.6rem;
@@ -116,6 +130,8 @@ transition: all 0.5s ease;
   width: 100%;
   display: flex;
   justify-content: space-around;
+
+ position: sticky;
 }
 
 .pagination-container{
@@ -128,9 +144,17 @@ border: 1px solid black;
 
 .page-number{
 font-size: 2rem;
+border: none;
+background: none;
 border-right: 1px solid black;
 padding: 1rem 2rem;
 cursor: pointer;
+
+}
+
+.page-number:hover{
+  background-color: grey;
+  color: white;
 }
 
 .pagination-container:last-child{

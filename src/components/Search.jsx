@@ -8,7 +8,7 @@ const Search = () => {
     <div className="search-bar">
    
       <input type="search" placeholder="search" onChange={(e)=>setQuery(e.target.value)} />
-      <button className="search-btn btn">Search</button>
+      {/* <button className="search-btn btn">Search</button> */}
     </div>
   );
 };

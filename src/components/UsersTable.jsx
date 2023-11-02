@@ -1,35 +1,52 @@
-import React, { useContext} from "react";
+import React, { useContext, useEffect, useState} from "react";
 import AppContext from "./contexts/AppContext";
 
 const Users = () => {
-  const { selected, setSelected, userData, setUserData, query } =
+  const { selected, setSelected, userData, setUserData, query,currentPage,usersPerPage } =
     useContext(AppContext);
 
-  const selectCheckbox = (e) => {
-    const { value: selectedId, checked } = e.target;
+const [filteredUsers,setFilteredUsers]=useState([])
 
-    if (checked) {
-      setSelected((prev) => {
-        return [...prev, selectedId];
-      });
-    } else {
-      const filteredIds = selected.filter((id) => selectedId !== id);
-      setSelected(filteredIds);
-    }
-  };
+const deleteUser = (id) => {
+  const remainingUsers = userData.filter((user) => {
+    return user.id !== id;
+  });
+  setUserData(remainingUsers);
+};
 
-  const deleteUser = (id) => {
-    const filteredUsers = userData.filter((user) => {
-      return user.id !== id;
+
+const selectCheckbox = (e) => {
+  const { value: selectedId, checked } = e.target;
+
+  if (checked) {
+    setSelected((prev) => {
+      return [...prev, selectedId];
     });
-    setUserData(filteredUsers);
-  };
+  } else {
+    const filteredIds = selected.filter((id) => selectedId !== id);
+    setSelected(filteredIds);
+  }
+};
+
+    
+  const lastIndex=currentPage*usersPerPage;
+  const firstIndex=lastIndex-usersPerPage
+ 
+  const visibleUsers=userData.slice(firstIndex,lastIndex)
+
 
   const filteredUsersBySearch = userData?.filter((user) => {
     return user.name.toLowerCase().startsWith(query.toLowerCase());
   });
+
+  
+
+  useEffect(()=>{
+    query.length>0?setFilteredUsers(filteredUsersBySearch):setFilteredUsers(visibleUsers)
+  },[query,currentPage])
+
   return (
-    <>
+    <div className="user-table">
       <table>
         <thead>
           <tr>
@@ -41,7 +58,7 @@ const Users = () => {
         </thead>
 
         <tbody>
-          {filteredUsersBySearch.map((user) => {
+          {filteredUsers.map((user) => {
             const { id, name, email, role } = user;
             return (
               <tr key={id}>
@@ -72,7 +89,7 @@ const Users = () => {
           })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 

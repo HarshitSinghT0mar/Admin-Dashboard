@@ -8,10 +8,23 @@ export const AppContextProvider = ({ children }) => {
   const [selected, setSelected] = useState([]);
   const [userData, setUserData] = useState([]);
   const [query, setQuery] = useState("");
+  const [usersPerPage, setUsersPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
   return (
     <AppContext.Provider
-      value={{ selected, setSelected, userData, setUserData, query, setQuery }}
+      value={{
+        selected,
+        setSelected,
+        userData,
+        setUserData,
+        query,
+        setQuery,
+        usersPerPage,
+        setUsersPerPage,
+        currentPage,
+        setCurrentPage,
+      }}
     >
       {children}
     </AppContext.Provider>
