@@ -4,6 +4,7 @@ import "./App.css";
 import UsersTable from "./components/UsersTable";
 import Search from "./components/Search";
 import AppContext from "./components/contexts/AppContext";
+import Pagination from "./components/Pagination";
 
 function App() {
   
@@ -47,6 +48,7 @@ function App() {
         <button className="btn delete-btn" onClick={deleteSelectedUsers}>
           Delete Selected
         </button>
+        <Pagination />
       </div>
     </div>
   );
