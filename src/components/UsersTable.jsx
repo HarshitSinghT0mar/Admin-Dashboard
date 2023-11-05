@@ -2,16 +2,16 @@ import React, { useContext, useEffect, useState} from "react";
 import AppContext from "./contexts/AppContext";
 
 const Users = () => {
-  const { selected, setSelected, userData, setUserData, query,currentPage,usersPerPage } =
+  const { selected, setSelected, userData, setUserData, query,currentPage,usersPerPage,filteredUsers,setFilteredUsers } =
     useContext(AppContext);
 
-const [filteredUsers,setFilteredUsers]=useState([])
+
 
 const deleteUser = (id) => {
-  const remainingUsers = userData.filter((user) => {
+  const remainingUsers = filteredUsers.filter((user) => {
     return user.id !== id;
   });
-  setUserData(remainingUsers);
+  setFilteredUsers(remainingUsers);
 };
 
 
@@ -89,6 +89,7 @@ const selectCheckbox = (e) => {
           })}
         </tbody>
       </table>
+      {filteredUsers.length===0&&<p className="no-user">No User</p>}
     </div>
   );
 };

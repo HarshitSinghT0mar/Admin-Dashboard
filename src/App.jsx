@@ -8,7 +8,7 @@ import Pagination from "./components/Pagination";
 const UsersTable = React.lazy(() => import("./components/UsersTable"));
 
 function App() {
-  const { selected, userData, setUserData } = useContext(AppContext);
+  const { selected, userData, setUserData ,setFilteredUsers,filteredUsers} = useContext(AppContext);
 
   const fetchData = async () => {
     const apiUrl =
@@ -30,10 +30,10 @@ function App() {
 
   const deleteSelectedUsers = () => {
     if (selected.length === 0) return;
-    const filteredUsers = userData.filter(
+    const nonSelectedUsers = filteredUsers.filter(
       (user) => !selected.includes(user.id)
     );
-    setUserData(filteredUsers);
+    setFilteredUsers(nonSelectedUsers);
   };
 
   return (

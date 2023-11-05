@@ -7,7 +7,7 @@ const Search = () => {
   return (
     <div className="search-bar">
    
-      <input type="search" placeholder="search" onChange={(e)=>setQuery(e.target.value)} />
+      <input type="search" placeholder="search by name" onChange={(e)=>setQuery(e.target.value)} />
       {/* <button className="search-btn btn">Search</button> */}
     </div>
   );

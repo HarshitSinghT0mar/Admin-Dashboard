@@ -131,7 +131,7 @@ transition: all 0.5s ease;
   display: flex;
   justify-content: space-around;
 
- position: sticky;
+ /* position: sticky; */
 }
 
 .pagination-container{
@@ -150,10 +150,11 @@ border-right: 1px solid black;
 padding: 1rem 2rem;
 cursor: pointer;
 
+
 }
 
 .page-number:hover{
-  background-color: grey;
+  background-color: rgb(196, 188, 188);
   color: white;
 }
 
@@ -165,9 +166,17 @@ cursor: pointer;
 
 
 
+.no-user{
+width: 100%;
+font-size: 3rem;
+display: flex;
+justify-content: center;
+}
 
-
-
+.active{
+  background-color: grey;
+  color: white;
+}
 
 
 
