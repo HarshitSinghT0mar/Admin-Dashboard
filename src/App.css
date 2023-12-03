@@ -93,6 +93,11 @@ td {
   position: relative;
 }
 
+td>input{
+  border: none;
+}
+
+
 
 .btn{
  /* max-width:5rem; */
@@ -101,8 +106,9 @@ td {
 padding: 0.3rem 2rem;
 cursor: pointer;
 transition: all 0.5s ease;
- 
+
 }
+
 
 .btn:hover{
   transform: scale(1.1);
@@ -115,6 +121,10 @@ transition: all 0.5s ease;
 
 .delete-btn{
   background-color: red;
+}
+.save-btn{
+  background-color: green;
+  margin-right: 2rem;
 }
 
 .checkbox{
@@ -131,7 +141,7 @@ transition: all 0.5s ease;
   display: flex;
   justify-content: space-around;
 
- /* position: sticky; */
+ position: sticky;
 }
 
 .pagination-container{

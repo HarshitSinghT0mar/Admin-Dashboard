@@ -1,24 +1,28 @@
-import { Suspense, useContext, useEffect, useState } from "react";
+import {useContext, useEffect, useState } from "react";
 import React from "react";
 import "./App.css";
 import Search from "./components/Search";
 import AppContext from "./components/contexts/AppContext";
 import Pagination from "./components/Pagination";
+import UsersTable from "./components/UsersTable";
+import axios from "axios";
 
-const UsersTable = React.lazy(() => import("./components/UsersTable"));
 
 function App() {
-  const { selected, userData, setUserData ,setFilteredUsers,filteredUsers} = useContext(AppContext);
+  const { selected, setUserData, setFilteredUsers, filteredUsers } =
+    useContext(AppContext);
+
 
   const fetchData = async () => {
     const apiUrl =
       "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
 
     try {
-      const res = await fetch(apiUrl);
-      const data = await res.json();
+      const res = await axios.get(apiUrl);
+      const data = await res.data;
 
       data.length > 0 ? setUserData(data) : null;
+    
     } catch (error) {
       console.log(error);
     }
@@ -39,9 +43,9 @@ function App() {
   return (
     <div className="app">
       <Search />
-      <Suspense fallback={<div style={{fontSize: "3rem"}}>Loading...</div>}>
-        <UsersTable />
-      </Suspense>
+
+      <UsersTable />
+
       <div className="bottom-container">
         <button className="btn delete-btn" onClick={deleteSelectedUsers}>
           Delete Selected

@@ -1,50 +1,79 @@
-import React, { useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AppContext from "./contexts/AppContext";
 
 const Users = () => {
-  const { selected, setSelected, userData, setUserData, query,currentPage,usersPerPage,filteredUsers,setFilteredUsers } =
-    useContext(AppContext);
+  const {
+    selected,
+    setSelected,
+    userData,
+    query,
+    currentPage,
+    usersPerPage,
+    filteredUsers,
+    setFilteredUsers,
+  } = useContext(AppContext);
 
+  const [editUser, setEditUser] = useState({edit :false, id: null});
+  const [editedData, setEditedData]=useState({name: '', email:'', role:''})
 
-
-const deleteUser = (id) => {
-  const remainingUsers = filteredUsers.filter((user) => {
-    return user.id !== id;
-  });
-  setFilteredUsers(remainingUsers);
-};
-
-
-const selectCheckbox = (e) => {
-  const { value: selectedId, checked } = e.target;
-
-  if (checked) {
-    setSelected((prev) => {
-      return [...prev, selectedId];
+  const deleteUser = (id) => {
+    const remainingUsers = filteredUsers.filter((user) => {
+      return user.id !== id;
     });
-  } else {
-    const filteredIds = selected.filter((id) => selectedId !== id);
-    setSelected(filteredIds);
+    setFilteredUsers(remainingUsers);
+  };
+
+  const selectCheckbox = (e) => {
+    const { value: selectedId, checked } = e.target;
+
+    if (checked) {
+      setSelected((prev) => {
+        return [...prev, selectedId];
+      });
+    } else {
+      const filteredIds = selected.filter((id) => selectedId !== id);
+      setSelected(filteredIds);
+    }
+  };
+
+  function updateFilteredUsers() {
+    const lastIndex = currentPage * usersPerPage;
+    const firstIndex = lastIndex - usersPerPage;
+
+    const visibleUsers = userData.slice(firstIndex, lastIndex);
+
+    const filteredUsersBySearch = userData?.filter((user) => {
+      const { name, role,email } = user;
+      return (
+        name.toLowerCase().startsWith(query.toLowerCase()) ||
+        role.toLowerCase().startsWith(query.toLowerCase())||email.toLowerCase().startsWith(query.toLowerCase())
+      );
+    });
+
+    if (query.length > 0) {
+      setFilteredUsers(() => filteredUsersBySearch);
+    } else {
+      setFilteredUsers(() => visibleUsers);
+    }
   }
-};
 
-    
-  const lastIndex=currentPage*usersPerPage;
-  const firstIndex=lastIndex-usersPerPage
- 
-  const visibleUsers=userData.slice(firstIndex,lastIndex)
+  useEffect(() => {
+    updateFilteredUsers();
+  }, [query, currentPage]);
 
 
-  const filteredUsersBySearch = userData?.filter((user) => {
-    return user.name.toLowerCase().startsWith(query.toLowerCase());
-  });
+  const handleEdit=(id,initialName,initialRole,initialEmail)=>{
+    setEditUser((prev)=>({...prev, edit: true, id: id}))
+    setEditedData(prev=>({...prev,name:initialName,email:initialEmail,role:initialRole}))
+  }
+  const handleEditChange=(e)=>{
+const {name,value}=e.target
+setEditedData(prev=>({...prev,[name]: value }))
+  }
 
-  
-
-  useEffect(()=>{
-    query.length>0?setFilteredUsers(filteredUsersBySearch):setFilteredUsers(visibleUsers)
-  },[query,currentPage])
-
+  const saveUser=()=>{
+setEditUser(prev=>({...prev, edit: false}))
+  }
   return (
     <div className="user-table">
       <table>
@@ -58,8 +87,9 @@ const selectCheckbox = (e) => {
         </thead>
 
         <tbody>
-          {filteredUsers.map((user) => {
+          {filteredUsers?.map((user) => {
             const { id, name, email, role } = user;
+           
             return (
               <tr key={id}>
                 <td>
@@ -69,19 +99,27 @@ const selectCheckbox = (e) => {
                     className="checkbox"
                     onChange={selectCheckbox}
                   />
-                  {name}
+
+                  {(editUser.edit&& editUser.id===id ) ? <input name="name" value={editedData.name} onChange={handleEditChange} type="text" className="editUser" /> : name}
                 </td>
-                <td>{email}</td>
-                <td>{role}</td>
+                <td>{(editUser.edit&& editUser.id===id ) ? <input name="email" type="email" value={editedData.email} onChange={handleEditChange}  className="editUser" />: email}</td>
+                <td>{(editUser.edit&& editUser.id===id )? <input name="role" value={editedData.role} onChange={handleEditChange} type="text" className="editUser" /> :role}</td>
                 <td>
                   <div className="action-buttons">
-                    <button className="btn edit-btn">Edit</button>
+                  {(editUser.edit&& editUser.id===id )?<button className="btn save-btn" onClick={()=>saveUser(id)}>Save</button>:<button
+                      className="btn edit-btn"
+                      onClick={(e)=>handleEdit(id,name,role,email)}
+                    >
+                      Edit
+                    </button>}
+                    
                     <button
                       className="btn delete-btn"
                       onClick={(e) => deleteUser(id)}
                     >
                       Delete
                     </button>
+                  
                   </div>
                 </td>
               </tr>
@@ -89,7 +127,7 @@ const selectCheckbox = (e) => {
           })}
         </tbody>
       </table>
-      {filteredUsers.length===0&&<p className="no-user">No User</p>}
+      {filteredUsers.length === 0 &&query.length!==0 && <p className="no-user">{`No User with: ${query}`}</p>}
     </div>
   );
 };
