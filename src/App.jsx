@@ -28,8 +28,10 @@ function App() {
     }
   };
 
+
   useEffect(() => {
     fetchData();
+
   }, []);
 
   const deleteSelectedUsers = () => {

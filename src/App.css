@@ -83,18 +83,22 @@ th,
 td {
   border-top: 1px solid #443C68;
   border-bottom: 1px solid #443C68;
-  min-width: 30rem;
+  min-width: 25rem;
   padding: 1.5rem;
   line-height: 1.7;
+}
+
+tr{
+  transition: all 0.2s ease;
+}
+tr:hover{
+  background-color: rgb(185, 179, 179);
+  cursor: pointer;
 }
 
 td {
   font-size: 1.4rem;
   position: relative;
-}
-
-td>input{
-  border: none;
 }
 
 

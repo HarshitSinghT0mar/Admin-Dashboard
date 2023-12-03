@@ -5,12 +5,16 @@ const AppContext = createContext();
 export const useAppData = () => useContext(AppContext);
 
 export const AppContextProvider = ({ children }) => {
+
+ 
+
   const [selected, setSelected] = useState([]);
   const [userData, setUserData] = useState([]);
   const [query, setQuery] = useState("");
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredUsers,setFilteredUsers]=useState([]);
+
 
   return (
     <AppContext.Provider
