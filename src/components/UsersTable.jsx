@@ -90,7 +90,7 @@ setEditUser(prev=>({...prev, edit: false}))
         </thead>
 
         <tbody>
-          {(filteredUsers.length?filteredUsers:visibleUsers).map((user) => {
+          {((filteredUsers.length==0&&query.length!==0)?filteredUsers:visibleUsers).map((user) => {
             const { id, name, email, role } = user;
            
             return (
