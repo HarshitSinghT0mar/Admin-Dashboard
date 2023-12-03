@@ -36,12 +36,12 @@ const Users = () => {
       setSelected(filteredIds);
     }
   };
+  const lastIndex = currentPage * usersPerPage;
+  const firstIndex = lastIndex - usersPerPage;
 
+  const visibleUsers = userData.slice(firstIndex, lastIndex);
  function updateFilteredUsers() {
-    const lastIndex = currentPage * usersPerPage;
-    const firstIndex = lastIndex - usersPerPage;
-
-    const visibleUsers = userData.slice(firstIndex, lastIndex);
+   
 
     const filteredUsersBySearch = userData?.filter((user) => {
       const { name, role,email } = user;
@@ -90,7 +90,7 @@ setEditUser(prev=>({...prev, edit: false}))
         </thead>
 
         <tbody>
-          {filteredUsers?.map((user) => {
+          {(filteredUsers.length?filteredUsers:visibleUsers).map((user) => {
             const { id, name, email, role } = user;
            
             return (
